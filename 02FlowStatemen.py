@@ -90,6 +90,9 @@ else:
         factor1 * factor2
     ))
 
+#2.4 Finding mates
+
+
 
 #During class
 
