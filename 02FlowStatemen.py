@@ -91,7 +91,106 @@ else:
     ))
 
 #2.4 Finding mates
+# read color and value of first playing card
+color1 = input()
+value1 = input()
+# read color and value of second playing card
+color2 = input()
+value2 = input()
+# determine the color of the first playing card’s mate
+if color1 == "spades":
+    mate = "clubs"
+elif color1 == "hearts":
+    mate = "diamonds"
+elif color1 == "clubs":
+    mate = "spades"
+else:
+    mate = "hearts"
+# determine whether or not the two cards are mates
+mates = "not " if mate != color2 or value1 != value2 else ""
+# output whether or not the two cards are mates
+print(f"the {value1} of {color1} and the {value2} of {color2} are {mates}mates")
 
+# 2.5 APGAR score
+# initialisation of score and validity
+score, valid = 0, True
+# criterium: respiration
+observation = input().lower()
+if observation == "strong cry":
+    score += 2
+elif observation == "weak":
+    score += 1
+elif observation != "absent":
+    valid = False
+# criterium: pulse rate
+try:
+    observation = int(input())
+    if observation >= 100:
+        score += 2
+    elif observation > 0:
+        score += 1
+    elif observation != 0:
+        valid = False
+except ValueError:
+    valid = False
+# criterium: muscle tone
+observation = input().lower()
+if observation == "resist extension":
+    score += 2
+elif observation == "some flexion":
+    score += 1
+elif observation != "none":
+    valid = False
+# criterium: appearance
+observation = input().lower()
+if observation == "pink":
+    score += 2
+elif observation == "extremities":
+    score += 1
+elif observation != "blue" and observation != "pale":
+    valid = False
+# criterium: reflex irritability
+observation = input().lower()
+if observation == "cry or pull away":
+    score += 2
+elif observation == "grimace":
+    score += 1
+elif observation != "no response":
+    valid = False
+# make final evaluation based on APGAR score
+if not valid:
+    print("invalid input")
+elif score < 4:
+    print("alarm")
+else:
+    print(score)
+
+#2.6 Stopwatch baby
+# read date
+day = int(input())
+month = input()
+year = int(input())
+# day
+# month name
+# year
+# determine stopwatch baby"s age in months from month name
+
+#   alternative way to convert month name into age in months of stopwatch baby:
+age_months = "january,february,march,april,may,june,july,"
+age_months += "august,september,october,november,december"
+age_months = (age_months.split(",").index(month.lower()) + 1) % 12
+
+    # determine age in years from year
+age_years = year - 2000 + int(not age_months)
+    # generate singular or plural version of time units
+days = "day" if day == 1 else "days"
+months = "month" if age_months == 1 else "months"
+years = "year" if age_years == 1 else "years"
+    # print formatted age of stopwatch baby
+print(
+    f"Stopwatch babies are {day} {days}, {age_months} {months} and " +
+    f"{age_years} {years} old on {day} {month} {year}."
+)
 
 
 #During class
