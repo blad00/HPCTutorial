@@ -35,9 +35,10 @@ while number != '123':
         else:
             even += 1
     # string together the three numbers to come up with a new number
+    numberOut = f'{even}_{odd}_{len(number)}'
     number = f'{even}{odd}{len(number)}'
     # output resulting number
-    print(number)
+    print(numberOut)
 
 #Torn numbers
 def torn(number):
@@ -61,7 +62,7 @@ def torn(number):
     return False
     # read number and determine whether or not it is torn
 negation = '' if torn(input()) else 'not'
-print(f'{negation}torn')
+print(f'{negation} torn')
 
 #The Ghent University prime number
 # read frequently occurring characters
