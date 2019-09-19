@@ -311,3 +311,84 @@ def window(sentence):
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
+
+#Rövarspråket
+
+def encode(text):
+    """
+    >>> encode("robber language")
+    "rorobbobberor lolangonguagoge"
+    >>> encode("Kalle Blomkvist")
+    "Kokallolle Bloblomkvomkvistost"
+    >>> encode("Astrid Lindgren")
+    "Astrostridod Lolindgrondgrenon"
+    """
+    # define vowels
+    vowels = "aeiou"
+    decoded, consonants = "", ""
+    for character in text:
+        if character.isalpha() and character.lower() not in vowels:
+            # add character to group of consecutive vowels
+            consonants += character
+        else:
+            # if a group of consecutive vowels was formed, add the group to
+            # the decoded text, followed by the letter o and a lowercase
+            # repetition of the group of vowels; after this a new group of
+            # vowels can be started
+            if consonants:
+                decoded += consonants + "o" + consonants.lower()
+                consonants = ""
+            # add the non-consonant to the decoded text
+            decoded += character
+
+        # if a group of vowels was formed at the end of the text, that group
+        # still needs to be added to the decoded text, followed by the letter o and
+        # a lowercase repetition of the group of vowels
+        if consonants:
+            decoded += consonants + "o" + consonants.lower()
+        # return decoded text
+        return decoded
+
+def decode(text):
+    """
+    >>> decode("rorobbobberor lolangonguagoge")
+    "robber language"
+    >>> decode("Kokallolle Bloblomkvomkvistost")
+    "Kalle Blomkvist"
+    >>> decode("Astrostridod Lolindgrondgrenon")
+    "Astrid Lindgren"
+    """
+
+    # define vowels
+    vowels = "aeiou"
+    # plaintext is initialize as the empty string
+    plaintext = ""
+
+    # traverse characters of decoded text from left to right, and remember the
+    # length of the group of consecutive vowels that is currently seen
+    index, consonants = 0, 0
+    while index < len(text):
+        if text[index].isalpha() and text[index].lower() not in vowels:
+            # consonant in first repetition of group of vowels is added in
+            # its current form (uppercase or lowercase) to the plaintext
+            plaintext += text[index]
+            # remember that we have seen another consonant in the current group
+            # of consecutive vowels
+            consonants += 1
+        elif consonants:
+            # after the first repetition of a group of consecutive vowels
+            # has been seen, we can skip the letter o and the repetition of
+            # that group
+            index += consonants # skip repetition of second repetition
+            consonants = 0 # prepare to see another group of consonants
+        else:
+            # add non-consonant that has not been skipped to plaintext
+            plaintext += text[index]
+        # prepare to process the next character
+        index += 1
+    # return the plaintext
+    return plaintext
+    
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
