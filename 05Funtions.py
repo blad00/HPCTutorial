@@ -61,7 +61,7 @@ def chemifyWord(word):
     """
     # alternative implementation
     while word and word[-1].lower() in 'aeiouy':
-    word = word[:-1]
+        word = word[:-1]
     """
     # append suffix -ium to word stem (if this is not already the case)
     if not word.endswith('ium'):
@@ -208,8 +208,9 @@ def abecedarian(word, alphabet):
     # check if all letters are in the same order as in the second string
     return all(
         alphabet.find(word[i]) <= alphabet.find(word[i + 1])
-    for i in range(len(word) - 1)
+        for i in range(len(word) - 1)
     )
+
 def reversal(word):
     """
     >>> reversal('Marshall')
@@ -223,7 +224,7 @@ def reversal(word):
     return ''.join(
         c1.lower() if c2.islower() else c1.upper()
         for c1, c2 in zip(word[::-1], word)
-)
+    )
 def doubleReversal(sentence):
     """
     >>> doubleReversal('Marshall Bean')
@@ -244,3 +245,69 @@ def doubleReversal(sentence):
         import doctest
     doctest.testmod()
 
+#Pangrammatic window
+
+def pangram(sentence):
+    """
+    >>> pangram("The quick brown fox jumps over the lazy dog.")
+    True
+    >>> pangram("The quick brown fox jumped over the lazy dog.")
+    False
+    >>> pangram("AbCdEfGhIjKlMnOpQrStUvWxYz")
+    True
+    """
+
+    # convert all letters into lower case
+    sentence = sentence.lower()
+    # check whether if there is a letter of the alphabet missing in the sentence
+    import string
+    for letter in string.ascii_lowercase:
+        if letter not in sentence:
+            # letter found that does not occur in the sentence
+            return False
+    # all letters occur in the sentence
+    return True
+
+def window(sentence):
+    """
+    >>> window("The quick brown fox jumps over the lazy dog.")
+    "quick brown fox jumps over the lazy dog"
+    >>> window("The quick brown fox jumped over the lazy dog.")
+    >>> window("I sang, and thought I sang very well; but he just looked up into my face with a very quizzical expression, and said, "How long have you been singing, Mademoiselle")
+    "g very well; but he just looked up into my face with a very quizzical ex"
+    >>> window("We are all from Xanth," Cube said quickly. "Just visiting Phaze. We just want to find the dragon.")
+    "from Xanth," Cube said quickly. "Just visiting Phaze. W"
+    """
+    # if sentence is itself not a pangram, it cannot contain a pangrammatic
+    # substring
+    if not pangram(sentence):
+        return None
+    # shortest pangrammatic substring is initialized to the entire sentence
+    window = sentence
+    # traverse all possible start positions: we take into account that the
+    # window needs bridge at least 26 characters
+    for start in range(len(sentence) - 26):
+        # traverse all possible stop positions: we take into account that
+        # windows needs to bridge at least 26 characters and that they need to
+        # be shorter than the shortest pangrammatic substring found so far
+        length, isPangram = 26, False
+        while (
+            length < len(window) and
+            # must be < shortest found so far
+            start + length <= len(sentence) and # don"t go beyond end of sentence
+            not isPangram # stop if pangram found
+        ):
+            # check if substring is a pangram in case the last character of the
+            # substring is a letter; can not be a pangram if the last character
+            # is not a letter, otherwise the previous substring would also have
+            # been a (shorter) pangram
+            if sentence[start + length - 1].isalpha():
+                substring = sentence[start:start + length]
+                if pangram(substring):
+                    window = substring
+                    isPangram = True
+            length += 1
+    return window
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
