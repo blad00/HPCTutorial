@@ -347,7 +347,7 @@ def encode(text):
         if consonants:
             decoded += consonants + "o" + consonants.lower()
         # return decoded text
-        return decoded
+    return decoded
 
 def decode(text):
     """
