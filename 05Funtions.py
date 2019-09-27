@@ -273,7 +273,7 @@ def window(sentence):
     >>> window("The quick brown fox jumps over the lazy dog.")
     "quick brown fox jumps over the lazy dog"
     >>> window("The quick brown fox jumped over the lazy dog.")
-    >>> window("I sang, and thought I sang very well; but he just looked up into my face with a very quizzical expression, and said, "How long have you been singing, Mademoiselle")
+    >>> window("I sang, and thought I sang very well; but he just looked up into my face with a very quizzical expression, and said, How long have you been singing, Mademoiselle")
     "g very well; but he just looked up into my face with a very quizzical ex"
     >>> window("We are all from Xanth," Cube said quickly. "Just visiting Phaze. We just want to find the dragon.")
     "from Xanth," Cube said quickly. "Just visiting Phaze. W"
